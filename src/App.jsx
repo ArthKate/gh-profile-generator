@@ -52,7 +52,7 @@ function InputComponent(props) {
       className='w-full'
       value={props.value}
       onChange={props.onChange}
-      onKeyPress={props.handleSubmit}
+      onKeyDown={props.handleSubmit}
     />
   );
 }
@@ -77,14 +77,15 @@ function App() {
 
   const handleInputValueChange = (e) => {
     setInputValue(e.target.value);
-    console.log(e);
+    
   };
 
   const handleSubmit = () => {
-    TextInput.addEventListener('keypress', (e) => {
+    TextInput.addEventListener('keyDown', (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
         fetchData();
+        setInputValue('')
       }
     });
   };
@@ -99,7 +100,7 @@ function App() {
         <InputComponent
           value={inputValue}
           onChange={handleInputValueChange}
-          onKeyPress={handleSubmit}
+          onKeyDown={handleSubmit}
         />
       </div>
     </div>
