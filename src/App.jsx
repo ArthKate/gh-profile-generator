@@ -10,20 +10,12 @@ function Avatar({ avatarImg }) {
   // if (avatarImg) {}
 
   return (
-    <div className='w-20 h-20 '>
-      {isGithubAvatar ? (
-        <img
-          src={avatarImg}
-          alt='my-gh-avatar image'
-          className='object-cover w-full h-full rounded-full'
-        />
-      ) : (
-        <img
-          src={octocat}
-          alt='gh-octocatimage'
-          className='object-cover w-full h-full rounded-full'
-        />
-      )}
+    <div className='w-36 h-36'>
+      <img
+        src={avatarImg}
+        alt='my-gh-avatar image'
+        className='object-cover w-full h-full rounded-full border-8 border-blue-700'
+      />
     </div>
   );
 }
@@ -47,7 +39,7 @@ function Heading(props) {
 }
 
 function GithubLogin(props) {
-  return <p className='text-blue-600 text-lg'>{props.login}</p>;
+  return <p className='text-blue-500 text-2xl'>{props.login}</p>;
 }
 
 function InputComponent(props) {
@@ -77,7 +69,7 @@ const App = () => {
       const results = await res.json();
       setGithubAvatar(results.avatar_url);
       setGithubUserName(results.name);
-      setGithubLogin(results.login);
+      setGithubLogin(`@${results.login}`);
       console.log(results);
     } catch (err) {
       console.error(err);
