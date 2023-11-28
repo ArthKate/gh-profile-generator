@@ -23,23 +23,15 @@ function Avatar({ avatarImg }) {
 function Heading(props) {
   const { name } = props;
 
-  const isDisplayUsername = true;
-
   return (
     <div>
-      {isDisplayUsername ? (
-        <h1 className=' text-white font-bold text-4xl max-w-prose'>{name}</h1>
-      ) : (
-        <h1 className=' text-white font-bold text-4xl max-w-prose'>
-          Find Your OctoProfile
-        </h1>
-      )}
+      <h1 className=' text-white font-bold text-4xl max-w-prose font-sans'>{name}</h1>
     </div>
   );
 }
 
 function GithubLogin(props) {
-  return <p className='text-blue-500 text-2xl'>{props.login}</p>;
+  return <p className='text-blue-500 text-2xl font-mono'>{props.login}</p>;
 }
 
 function InputComponent(props) {
