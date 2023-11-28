@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, } from 'react';
 import { TextInput } from '@mantine/core';
 import octocat from './assets/octocat.png';
 // import fetchData from './fetchData.js'
@@ -52,12 +52,12 @@ function InputComponent(props) {
       className='w-full'
       value={props.value}
       onChange={props.onChange}
-      onKeyPress={props.handleSubmit}
+      onKeyDown={props.onKeyDown}
     />
   );
 }
 
-function App() {
+const App = () => {
   const [inputValue, setInputValue] = useState('');
   const [githubAvatar, setGithubAvatar] = useState(octocat);
   const [profileName, setProfileName] = useState('Find Your OctoProfile');
@@ -77,19 +77,16 @@ function App() {
 
   const handleInputValueChange = (e) => {
     setInputValue(e.target.value);
-    console.log(e);
+    
   };
 
-  const handleSubmit = () => {
-    TextInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        fetchData();
-      }
-    });
+  const handleSubmitOnKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      console.log(fetchData());
+      setInputValue('');
+    }
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div className='flex flex-col h-screen bg-gray-900'>
@@ -99,7 +96,7 @@ function App() {
         <InputComponent
           value={inputValue}
           onChange={handleInputValueChange}
-          onKeyPress={handleSubmit}
+          onKeyDown={handleSubmitOnKeyDown}
         />
       </div>
     </div>
