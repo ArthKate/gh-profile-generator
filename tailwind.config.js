@@ -6,7 +6,11 @@ export default {
     container: {
       center: true,
     },
+    fontFamily: {
+      sans: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+      square: ['Nova Square', 'sans-serif'],
+      mono: ['IBM Plex Mono', 'monospace'],
+    },
   },
   plugins: [],
 };
-
