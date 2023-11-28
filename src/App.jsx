@@ -1,10 +1,14 @@
+/* eslint-disable react/prop-types */
 import { useState, } from 'react';
 import { TextInput } from '@mantine/core';
 import octocat from './assets/octocat.png';
 // import fetchData from './fetchData.js'
 
 function Avatar({ avatarImg }) {
-  const isGithubAvatar = false;
+
+  const isGithubAvatar = true;
+
+  // if (avatarImg) {}
 
   return (
     <div className='w-20 h-20 '>
@@ -26,9 +30,11 @@ function Avatar({ avatarImg }) {
 }
 
 function Heading(props) {
+
   const { username } = props;
 
-  const isDisplayUsername = false;
+  const isDisplayUsername = true;
+
   return (
     <div>
       {isDisplayUsername ? (
@@ -68,8 +74,17 @@ const App = () => {
       const res = await fetch(url);
       if (!res.ok) throw new Error(`invalid endpoint ${res.status}`);
       const results = await res.json();
-      setGithubAvatar(results.avatar_url);
-      setProfileName(results.login);
+
+      if (results.avatar_url != null && results.avatar_url !== ''){
+        setGithubAvatar(results.avatar_url);
+      } 
+
+      if (results.avatar_url != null && results.avatar_url !== ''){
+        setProfileName(results.login);
+      } 
+
+      console.log(profileName)
+      console.log(githubAvatar)
     } catch (err) {
       console.error(err);
     }
@@ -83,7 +98,7 @@ const App = () => {
   const handleSubmitOnKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      console.log(fetchData());
+      fetchData()
       setInputValue('');
     }
   };
