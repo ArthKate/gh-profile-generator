@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useState, } from 'react';
+import { useState } from 'react';
 import { TextInput } from '@mantine/core';
 import octocat from './assets/octocat.png';
 // import fetchData from './fetchData.js'
 
 function Avatar({ avatarImg }) {
-
   const isGithubAvatar = true;
 
   // if (avatarImg) {}
@@ -30,17 +29,14 @@ function Avatar({ avatarImg }) {
 }
 
 function Heading(props) {
-
-  const { username } = props;
+  const { name } = props;
 
   const isDisplayUsername = true;
 
   return (
     <div>
       {isDisplayUsername ? (
-        <h1 className=' text-white font-bold text-4xl max-w-prose'>
-          {username}
-        </h1>
+        <h1 className=' text-white font-bold text-4xl max-w-prose'>{name}</h1>
       ) : (
         <h1 className=' text-white font-bold text-4xl max-w-prose'>
           Find Your OctoProfile
@@ -48,6 +44,10 @@ function Heading(props) {
       )}
     </div>
   );
+}
+
+function GithubLogin(props) {
+  return <p className='text-blue-600 text-lg'>{props.login}</p>;
 }
 
 function InputComponent(props) {
@@ -66,7 +66,8 @@ function InputComponent(props) {
 const App = () => {
   const [inputValue, setInputValue] = useState('');
   const [githubAvatar, setGithubAvatar] = useState(octocat);
-  const [profileName, setProfileName] = useState('Find Your OctoProfile');
+  const [githubUserName, setGithubUserName] = useState('Find Your OctoProfile');
+  const [githubLogin, setGithubLogin] = useState('');
 
   const fetchData = async () => {
     try {
@@ -74,17 +75,10 @@ const App = () => {
       const res = await fetch(url);
       if (!res.ok) throw new Error(`invalid endpoint ${res.status}`);
       const results = await res.json();
-
-      if (results.avatar_url != null && results.avatar_url !== ''){
-        setGithubAvatar(results.avatar_url);
-      } 
-
-      if (results.avatar_url != null && results.avatar_url !== ''){
-        setProfileName(results.login);
-      } 
-
-      console.log(profileName)
-      console.log(githubAvatar)
+      setGithubAvatar(results.avatar_url);
+      setGithubUserName(results.name);
+      setGithubLogin(results.login);
+      console.log(results);
     } catch (err) {
       console.error(err);
     }
@@ -92,13 +86,12 @@ const App = () => {
 
   const handleInputValueChange = (e) => {
     setInputValue(e.target.value);
-    
   };
 
   const handleSubmitOnKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      fetchData()
+      fetchData();
       setInputValue('');
     }
   };
@@ -107,7 +100,8 @@ const App = () => {
     <div className='flex flex-col h-screen bg-gray-900'>
       <div className='flex flex-col mt-20 space-y-7 mx-auto place-items-center'>
         <Avatar avatarImg={githubAvatar} />
-        <Heading username={profileName} />
+        <Heading name={githubUserName} />
+        <GithubLogin login={githubLogin} />
         <InputComponent
           value={inputValue}
           onChange={handleInputValueChange}
@@ -116,6 +110,6 @@ const App = () => {
       </div>
     </div>
   );
-}
+};
 
 export default App;
